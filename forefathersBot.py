@@ -9,9 +9,9 @@ from datetime import date
 # Set up the database connection
 try:
 	db = MySQLdb.connect(host="localhost",
-			     user="forefathersBot",
-			     passwd="userhaslessthan75dollarsatalltimes",
-			     db="forefathersBot")
+			     user="forefathersbot",
+			     passwd="password",
+			     db="forefathersbot")
 
 except:
 	print "Failed to connect to database, exiting"
@@ -22,7 +22,7 @@ reddit = praw.Reddit('forefathersBot by u/NeverForgetY2K v0.2.0'
 				'Comes when summoned and provides a quote from one of Americas Forefathers.')
 
 normalQuotes, processedComments = [], []
-summonWord = 'forefathersBot'
+summonWord = 'forefathersbot'
 cur = db.cursor()
 
 # Try to open the log file, if it does not exist, it will be created
@@ -73,7 +73,7 @@ def connectToServer():
 	while True:
 		try:
 			logWrite("Attempting to connect to server.....")
-			reddit.login()
+			reddit.login("username", "password")
 			logWrite("Server Connection successful!")
 			print "Connected successfully"
 			break
@@ -138,7 +138,7 @@ def processQueue():
 
 		try:
 			queuedComment = submission.comments[0]
-				queuedComment.reply(generateQuote(normalQuotes))
+			queuedComment.reply(generateQuote(normalQuotes))
 
 			print "\nReplying to: " , queuedComment.id
 			dequeue(comment[0])
