@@ -114,7 +114,11 @@ def generateQuote(quoteList):
 	quote = "##Forefathers quote:##\n\n >"
 
 	randomNum = random.randint(0,len(quoteList)-1)
-	quote += quoteList[randomNum]
+	toSplit = str(quoteList[randomNum])
+	splitStr = toSplit.split("@")
+	print(splitStr)
+	quote += splitStr[0] + "\n"
+	quote += '##' + splitStr[1] + '##'
 
 	quote += "\n\n*****"
 	quote += "\n\n^^***If*** ^^***you*** ^^***would*** ^^***like*** ^^***to*** "
