@@ -118,7 +118,7 @@ def generateQuote(quoteList):
 	splitStr = toSplit.split("@")
 	print(splitStr)
 	quote += splitStr[0] + "\n"
-	quote += '##' + splitStr[1] + '##'
+	quote += '#####' + splitStr[1] + '#####'
 
 	quote += "\n\n*****"
 	quote += "\n\n^^***If*** ^^***you*** ^^***would*** ^^***like*** ^^***to*** "
