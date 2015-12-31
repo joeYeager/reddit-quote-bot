@@ -24,11 +24,11 @@ class Quotes:
 
 
     # Generates and returns the quote string used in the process queue function 
-    def generate(self, quote_list):
-        quote = "##Forefathers quote:##\n\n >"
+    def generate(self, header):
+        quote = "##" + header + ":##\n\n >"
 
         randomNum = random.randint(0,len(quote_list)-1)
-        to_split = str(quote_list[randomNum])
+        to_split = str(self.quote_list[randomNum])
         split_str = to_split.split("@")
         quote += split_str[0] + "\n"
         quote += '#####' + splitStr[1] + '#####'

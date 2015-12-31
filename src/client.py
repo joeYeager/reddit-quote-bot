@@ -1,11 +1,12 @@
 import time, praw, requests, sys
 
 class Client:
-    def __init__(self, useragent, summon_string, queue, logger):
+    def __init__(self, useragent, summon_string, queue, quote, logger):
         self.summon = summon_string
         self.reddit = praw.Reddit(useragent)
         self.processed_comments = []
         self.queue = queue
+        self.quote = quote
         self.logger = logger
 
     # Login to the server using the credentials provided in the praw.ini file
@@ -34,11 +35,11 @@ class Client:
     # Fetches comments and then parses them looking for summon commands
     def process_comments(self, subreddits, comment_limit):
         try:
-            for comment in praw.helpers.comment_stream(reddit,subreddits,limit=comment_limit): # Parse all of the comments fetched
-                if comment.id not in processed_comments: # The comment has not been processed yet
+            for comment in praw.helpers.comment_stream(self.reddit,subreddits,limit=comment_limit): # Parse all of the comments fetched
+                if comment.id not in self.processed_comments: # The comment has not been processed yet
                     comment_words = comment.body.lower().split() #split the comment into lowercase words
-                    if summon_word in comment_words: # Comment contains the summon command
-                        self.reply(comment, "message")
+                    if self.summon in comment_words: # Comment contains the summon command
+                        self.reply(comment, self.quote.generate())
 
         except praw.errors.RedirectException:
             self.logger.write("Unexpected redirect..")
@@ -63,13 +64,14 @@ class Client:
             return  # Nothing to process, exit function
 
         for comment in comment_queue:
-            submission = reddit.get_submission(comment[1])      
+            submission = self.reddit.get_submission(comment[1])     
 
             try:
                 queued_comment = submission.comments[0]
-                queued_comment.reply(generate_quote(normal_quotes))
-
+                
                 print "\nReplying to: " , queued_comment.id
+                self.reply(queued_comment, self.quote.generate())
+                
                 self.queue.remove(comment[0])
 
             except praw.errors.RateLimitExceeded:
