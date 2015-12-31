@@ -15,7 +15,7 @@ class Client:
     def connect(self, username, password):
         try:
             self.logger.write("Attempting to connect to server.....")
-            self.reddit.login("username", "password")
+            self.reddit.login(username, password)
             self.logger.write("Server Connection successful!")
             print "Connected successfully"
         except requests.exceptions.ConnectionError:

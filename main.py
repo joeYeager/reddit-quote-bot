@@ -10,7 +10,7 @@ summon_string = "forefathersbot"
 log = logger.Logger("logs/log.txt")
 quo = quote.Quotes(owner_name, log)
 q = queue.Queue(log)
-q.connect("localhost","forefathersbot","americaFuckYeah","forefathersbot", "queue")
+q.connect("localhost","forefathersbot","password","forefathersbot", "queue")
 c = client.Client(user_agent, summon_string, q, log)
 
 # # Run the bot
