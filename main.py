@@ -53,7 +53,6 @@ _quote.load(quote_file)
 
 while True:
     try:
-        _client.process_queue()
         _client.process_comments(subreddits,comment_limit)
 
     except KeyboardInterrupt:

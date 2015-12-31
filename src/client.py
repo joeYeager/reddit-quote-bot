@@ -35,7 +35,9 @@ class Client:
     # Fetches comments and then parses them looking for summon commands
     def process_comments(self, subreddits, comment_limit):
         try:
-            for comment in praw.helpers.comment_stream(self.reddit,subreddits,limit=comment_limit): # Parse all of the comments fetched
+            for comment in praw.helpers.comment_stream(self.reddit,subreddits,limit=comment_limit):
+                if self.queue.is_queued():
+                    self.process_queue()
                 if comment.id not in self.processed_comments: # The comment has not been processed yet
                     comment_words = comment.body.lower().split() #split the comment into lowercase words
                     if self.summon in comment_words: # Comment contains the summon command
@@ -52,6 +54,7 @@ class Client:
         except praw.errors.RateLimitExceeded:
             self.logger.write("RateLimitExceeded, will attempt again later")
             self.queue.add(comment.id,comment.permalink)
+            self.queue.check_queued()
 
     # Processes and replys to the comment queue
     # If a rate limit is hit, that comment is skipped and the next in queue is attempted
@@ -59,10 +62,6 @@ class Client:
     # comment it line is.
     # If the comment is successfully replied to, it is removed from all nessecary queues
     def process_queue(self):
-        comment_queue = self.queue.get()
-        if len(comment_queue) == 0:
-            return  # Nothing to process, exit function
-
         for comment in comment_queue:
             submission = self.reddit.get_submission(comment[1])     
 
@@ -71,7 +70,7 @@ class Client:
                 
                 print "\nReplying to: " , queued_comment.id
                 self.reply(queued_comment, self.quote.generate())
-                
+
                 self.queue.remove(comment[0])
 
             except praw.errors.RateLimitExceeded:
@@ -79,3 +78,5 @@ class Client:
 
             except IndexError: # comment has been deleted
                 self.queue.remove(comment[0])
+
+        self.queue.check_queued()

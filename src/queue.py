@@ -3,6 +3,8 @@ import MySQLdb, sys
 class Queue:
     def __init__(self, logger):
         self.logger = logger
+        self.has_queued = False
+        self.check_queued()
 
     def connect(self, h, u, password, database, table):
         try:
@@ -29,6 +31,13 @@ class Queue:
         query = "SELECT * FROM " + self.table + ";" 
         self.cur.execute(query)
         return self.cur.fetchall()
+
+    def check_queued(self):
+        comment_queue = self.queue.get()
+        self.has_queued = len(comment_queue) != 0
+
+    def is_queued(self):
+        return self.has_queued
 
     def close(self):
         self.db.commit()
