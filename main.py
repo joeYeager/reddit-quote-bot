@@ -1,8 +1,18 @@
-from src import queue, client
+from src import queue, client, logger, quote
+
+owner_name = "NeverForgetY2K"
+username = ""
+user_agent = "forefathersBot by u/NeverForgetY2K v0.2.0"
+user_agent += " Comes when summoned and provides a quote from one of America\'s forefathers."
+summon_string = "forefathersbot"
 
 
-queue = queue.Queue("localhost", "forefathersbot","americaFuckYeah",
-                        "forefathersbot", "queue")
+log = logger.Logger("logs/log.txt")
+quo = quote.Quotes(owner_name, log)
+q = queue.Queue(log)
+q.connect("localhost","forefathersbot","americaFuckYeah","forefathersbot", "queue")
+c = client.Client(user_agent, summon_string, q, log)
+
 # # Run the bot
 # while True:
 #     try:
