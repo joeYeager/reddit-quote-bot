@@ -34,7 +34,7 @@ class Client:
     # Fetches comments and then parses them looking for summon commands
     def process_comments(self, subreddits, comment_limit):
         try:
-            for comment in praw.helpers.comment_stream(reddit,'all',limit=comment_limit): # Parse all of the comments fetched
+            for comment in praw.helpers.comment_stream(reddit,subreddits,limit=comment_limit): # Parse all of the comments fetched
                 if comment.id not in processed_comments: # The comment has not been processed yet
                     comment_words = comment.body.lower().split() #split the comment into lowercase words
                     if summon_word in comment_words: # Comment contains the summon command
@@ -45,7 +45,7 @@ class Client:
 
     def reply(self, comment, message):
         try:
-            mark_processed(comment.id)
+            self.mark_processed(comment.id)
             comment.reply(message)
 
         except praw.errors.RateLimitExceeded:
@@ -76,4 +76,4 @@ class Client:
                 self.logger.write("RateLimitExceeded, will attempt again later")
 
             except IndexError: # comment has been deleted
-                dequeue(comment[0])
+                self.queue.remove(comment[0])

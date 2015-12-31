@@ -1,29 +1,58 @@
 from src import queue, client, logger, quote
 
+# The owner name for the bot, displayed in the bots comment and provided in the user_agent
 owner_name = "NeverForgetY2K"
-username = ""
-user_agent = "forefathersBot by u/NeverForgetY2K v0.2.0"
-user_agent += " Comes when summoned and provides a quote from one of America\'s forefathers."
-summon_string = "forefathersbot"
 
+# The version number of the bot
+version = "0.2.0"
 
-log = logger.Logger("logs/log.txt")
-quo = quote.Quotes(owner_name, log)
-q = queue.Queue(log)
-q.connect("localhost","forefathersbot","password","forefathersbot", "queue")
-c = client.Client(user_agent, summon_string, q, log)
+# The bot's username and password combination
+bot_name = "ForeFathersBot"
+password = "password"
 
-# # Run the bot
-# while True:
-#     try:
-#         process_comments()
+# A short description of what the bot does
+description = "Comes when summoned and provides a quote from one of America\'s forefathers."
 
-#     except KeyboardInterrupt:
-#         print "\nKeyboardInterrupt, saving state and exiting program...."
-#         db.commit()
-#         log_file.close()
-#         sys.exit(0)
+# The word you would like to cause the bot to trigger 
+summon_word = "forefathersbot"
 
-#     except requests.exceptions.ConnectionError:
-#         log_write("Connection to Server lost!!!")
-#         connect_to_server() 
+# Relative file path to the logfile
+log_file = "logs/log.txt"
+
+# Comma sepearted list of the subreddits for the bot to operate in
+subreddits = "all"
+
+# How mant comments would you like the bot to stream at a time
+comment_limit = 1000
+
+# The user agent string to be provided to reddit upon establishing a connection
+user_agent = "{} by u/{} v{} {}".format(bot_name, owner_name, version, description)
+
+# Database settings
+db_host = "localhost"
+db_user = "forefathersbot"
+db_pw = "password"
+db_name = "forefathersbot"
+db_table = "queue" # Do not change this if you built the table using the schema
+
+_logger = logger.Logger(log_file)
+_quote = quote.Quotes(owner_name, _logger)
+_queue = queue.Queue(_logger)
+_client = client.Client(user_agent, summon_word, _queue, _logger)
+
+_queue.connect(db_host, db_user, db_pw, db_name, db_table)
+_client.connect(bot_name, password)
+
+while True:
+    try:
+        _client.process_comments(subreddits,comment_limit)
+
+    except KeyboardInterrupt:
+        print "\nKeyboardInterrupt, saving state and exiting program...."
+        _queue.close()
+        _logger.close()
+        sys.exit(0)
+
+    except requests.exceptions.ConnectionError:
+        _logger.write("Connection to Server lost!!!")
+        _client.connect(bot_name, password)
