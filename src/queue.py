@@ -4,13 +4,13 @@ class Queue:
     def __init__(self, logger):
         self.logger = logger
         self.has_queued = False
-        self.check_queued()
 
     def connect(self, h, u, password, database, table):
         try:
             self.db = MySQLdb.connect(host=h,user=u,passwd=password,db=database)
             self.cur = self.db.cursor()
             self.table = table;
+            self.check_queued()
         except:
             self.logger.fail("Failed to connect to database, exiting");
             sys.exit(1)

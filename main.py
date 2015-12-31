@@ -2,20 +2,20 @@ from src import queue, client, logger, quote
 import requests, sys
 
 # The owner name for the bot, displayed in the bots comment and provided in the user_agent
-owner_name = "NeverForgetY2K"
+owner_name = "ProudBotOwner"
 
 # The version number of the bot
-version = "0.2.0"
+version = "1.0.0"
 
 # The bot's username and password combination
-bot_name = "ForeFathersBot"
+bot_name = "MyBotsUserName"
 password = "password"
 
 # A short description of what the bot does
-description = "Comes when summoned and provides a quote from one of America\'s forefathers."
+description = "A short description of what my bot does"
 
 # The word you would like to cause the bot to trigger 
-summon_word = "forefathersbot"
+summon_word = "word_in_comment_that_summons_bot"
 
 # Relative file path to the logfile
 log_file = "logs/log.txt"
@@ -33,13 +33,13 @@ comment_limit = 1000
 user_agent = "{} by u/{} v{} {}".format(bot_name, owner_name, version, description)
 
 # Header string
-header = "Forefathers Quote"
+header = "Comment header"
 
 # Database settings
 db_host = "localhost"
-db_user = "forefathersbot"
+db_user = "database_username"
 db_pw = "password"
-db_name = "forefathersbot"
+db_name = "database_name"
 db_table = "queue" # Do not change this if you built the table using the provided schema
 
 _logger = logger.Logger(log_file)

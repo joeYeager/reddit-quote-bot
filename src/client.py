@@ -62,6 +62,7 @@ class Client:
     # comment it line is.
     # If the comment is successfully replied to, it is removed from all nessecary queues
     def process_queue(self):
+        comment_queue = self.queue.get()
         for comment in comment_queue:
             submission = self.reddit.get_submission(comment[1])     
 
