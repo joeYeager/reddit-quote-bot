@@ -14,7 +14,6 @@ class Quotes:
     # So the quotes should be seperated by a newline
     def load(self, fileToLoad):
         try:
-            print("Loading: " + fileToLoad)
             self.quote_file = open(fileToLoad, 'r')
             for i in self.quote_file:
                 self.quote_list.append(i)
@@ -28,11 +27,11 @@ class Quotes:
     def generate(self):
         quote = "##" + self.header + ":##\n\n >"
 
-        randomNum = random.randint(0,len(quote_list)-1)
+        randomNum = random.randint(0,len(self.quote_list)-1)
         to_split = str(self.quote_list[randomNum])
         split_str = to_split.split("@")
         quote += split_str[0] + "\n"
-        quote += '#####' + splitStr[1] + '#####'
+        quote += '#####' + split_str[1] + '#####'
 
         quote += "\n\n*****"
         quote += "\n\n^^***If*** ^^***you*** ^^***would*** ^^***like*** ^^***to*** "
