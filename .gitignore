@@ -1,6 +1,2 @@
-# Unnessecary text files
-notes.txt
-log.txt
-funnyQuotes.txt
-# Emacs tmp files
-*~
+# Python Byte Code
+*.pyc

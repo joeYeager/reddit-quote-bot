@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.37, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: forefathersBot
+-- Host: localhost    Database: botDatabase
 -- ------------------------------------------------------
 -- Server version	5.5.37-0+wheezy1
 
@@ -24,8 +24,7 @@ DROP TABLE IF EXISTS `queue`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `queue` (
   `ID` varchar(100) DEFAULT NULL,
-  `URL` varchar(1000) DEFAULT NULL,
-  `type` varchar(20) DEFAULT NULL,
+  `URL` varchar(1000) DEFAULT NULL
   UNIQUE KEY `UQ_NAME` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
