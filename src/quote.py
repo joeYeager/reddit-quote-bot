@@ -1,10 +1,11 @@
 import random, sys
 
 class Quotes:
-    def __init__(self, owner, logger):
+    def __init__(self, owner, logger, header):
         self.owner = owner
         self.quote_list = []
         self.logger = logger
+        self.header = header
     # the load_quotes function takes two arguments
     # The first argument is the file path of the file to load
     # The second arugment is the list in which you wish to store the lines
@@ -24,8 +25,8 @@ class Quotes:
 
 
     # Generates and returns the quote string used in the process queue function 
-    def generate(self, header):
-        quote = "##" + header + ":##\n\n >"
+    def generate(self):
+        quote = "##" + self.header + ":##\n\n >"
 
         randomNum = random.randint(0,len(quote_list)-1)
         to_split = str(self.quote_list[randomNum])

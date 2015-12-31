@@ -32,6 +32,9 @@ comment_limit = 1000
 # The user agent string to be provided to reddit upon establishing a connection
 user_agent = "{} by u/{} v{} {}".format(bot_name, owner_name, version, description)
 
+# Header string
+header = "Forefathers Quote"
+
 # Database settings
 db_host = "localhost"
 db_user = "forefathersbot"
@@ -40,7 +43,7 @@ db_name = "forefathersbot"
 db_table = "queue" # Do not change this if you built the table using the provided schema
 
 _logger = logger.Logger(log_file)
-_quote = quote.Quotes(owner_name, _logger)
+_quote = quote.Quotes(owner_name, _logger, header)
 _queue = queue.Queue(_logger)
 _client = client.Client(user_agent, summon_word, _queue, _quote, _logger)
 
@@ -50,7 +53,7 @@ _quote.load(quote_file)
 
 while True:
     try:
-        _client.process_queue(subreddits,comment_limit)
+        _client.process_queue()
         _client.process_comments(subreddits,comment_limit)
 
     except KeyboardInterrupt:
