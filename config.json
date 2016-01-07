@@ -1,0 +1,25 @@
+{
+    "owner_name": "Proud Bot Owner",
+    "version": "1.0.0",
+
+    "bot_name": "Bots Reddit Name",
+    "bot_pass": "Bots reddit pass",
+    "description": "A description of what the bot does",
+    "summon_word": "The word you want the bot to look for, triggers a response",
+
+    "log_file": "logs/log.txt",
+    "quote_file": "quotes/quotes.txt",
+
+    "subreddits": "comma separated list of the subreddits to scan",
+    "comment_limit": 1000,
+
+    "header": "This is the header that will show up in your comment",
+    
+    "db":{
+        "host": "localhost",
+        "username": "user",
+        "password": "pass",
+        "database": "database name",
+        "table": "queue"
+    }
+}
