@@ -1,5 +1,5 @@
 {
-    "owner_name": "Proud Bot Owner",
+    "owner_name": "Proud_Bot_Owner",
     "version": "1.0.0",
 
     "bot_name": "Bots Reddit Name",
@@ -8,7 +8,7 @@
     "summon_word": "The word you want the bot to look for, triggers a response",
 
     "log_file": "logs/log.txt",
-    "quote_file": "quotes/quotes.txt",
+    "quote_file": "quotes/quotes.json",
 
     "subreddits": "comma separated list of the subreddits to scan",
     "comment_limit": 1000,

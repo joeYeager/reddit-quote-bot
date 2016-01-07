@@ -33,7 +33,7 @@ class Queue:
         return self.cur.fetchall()
 
     def check_queued(self):
-        comment_queue = self.queue.get()
+        comment_queue = self.get()
         self.has_queued = len(comment_queue) != 0
 
     def is_queued(self):

@@ -1,10 +1,10 @@
 from src import queue, client, logger, quote, config
 import requests, sys
 
-c = config.Config()
+c = config.Config("config.json")
 
 _logger = logger.Logger(c.log_file)
-_quote = quote.Quotes(c.owner_name, _logger,c.header)
+_quote = quote.Quotes(c.owner_name, _logger, c.header)
 _queue = queue.Queue(_logger)
 _client = client.Client(c.user_agent, c.summon_word, _queue, _quote, _logger)
 

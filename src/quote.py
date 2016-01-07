@@ -1,4 +1,4 @@
-import random, sys
+import random, sys, json
 
 class Quotes:
     def __init__(self, owner, logger, header):
@@ -12,12 +12,13 @@ class Quotes:
     # This fucntion will read in the file line by line 
     # and then store each line in the list as a quote. 
     # So the quotes should be seperated by a newline
-    def load(self, fileToLoad):
+    def load(self, quote_file):
         try:
-            self.quote_file = open(fileToLoad, 'r')
-            for i in self.quote_file:
-                self.quote_list.append(i)
-            self.quote_file.close()
+            with open(quote_file) as quote_json:
+                quotes = json.load(quote_json)
+
+            self.quote_list = quotes.get("all", [])
+
         except IOError:
             self.logger.fail("Failed to open quotes file, closing program.")
             sys.exit(1)
@@ -28,10 +29,9 @@ class Quotes:
         quote = "##" + self.header + ":##\n\n >"
 
         randomNum = random.randint(0,len(self.quote_list)-1)
-        to_split = str(self.quote_list[randomNum])
-        split_str = to_split.split("@")
-        quote += split_str[0] + "\n"
-        quote += '#####' + split_str[1] + '#####'
+        raw_quote = self.quote_list[randomNum]
+        quote += raw_quote.get("quote", None) + "\n"
+        quote += '#####' + raw_quote.get("person", None) + '#####'
 
         quote += "\n\n*****"
         quote += "\n\n^^***If*** ^^***you*** ^^***would*** ^^***like*** ^^***to*** "

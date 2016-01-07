@@ -40,4 +40,4 @@ class Config:
         self.db_table = db.get("table", None)
 
         # The user agent string to be provided to reddit upon establishing a connection
-        self.user_agent = "{} by u/{} v{} {}".format(bot_name, owner_name, version, description)
+        self.user_agent = "{} by u/{} v{} {}".format(self.bot_name, self.owner_name, self.version, self.description)
